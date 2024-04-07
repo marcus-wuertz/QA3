@@ -130,3 +130,15 @@ class Application(tk.Tk):
             home_button.pack()
         else:
             ttk.Label(self, text="No quiz has been taken yet.").pack()
+
+    def clear_screen(self):
+        for widget in self.winfo_children():
+            widget.destroy()
+
+    def __del__(self):
+        # Close the database connection when the application is destroyed
+        self.connection.close()
+
+if __name__ == "__main__":
+    app = Application()
+    app.mainloop()
