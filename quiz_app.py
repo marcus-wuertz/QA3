@@ -54,3 +54,43 @@ class Application(tk.Tk):
 
         # Get the table name based on the selected category
         table_name = self.category_table_mapping.get(selected_category)
+
+        if table_name:
+            # Query the database to fetch questions for the selected category
+            questions = self.fetch_questions(table_name)
+            self.answer_vars = []  # List to store answer variables
+            
+            # Create a label for feedback
+            self.feedback_label = tk.Label(self)
+            self.feedback_label.pack()
+            
+            for question_data in questions:
+                # Display the question to the user
+                question_label = ttk.Label(self, text=question_data[1])  # Display question
+                question_label.pack()
+
+                # Create a Combobox for the user to select their answer
+                answer_var = tk.StringVar()  # Define as local variable
+                answer_combo = ttk.Combobox(self, textvariable=answer_var, values=question_data[2:6], width=50)  # Adjust width as needed
+                answer_combo.pack()
+
+                # Append answer_var to the list
+                self.answer_vars.append(answer_var)
+
+                # Button to submit answer
+                submit_button = tk.Button(self, text="Submit", command=lambda qa=question_data, av=answer_var: self.check_answer(qa[6], av))
+                submit_button.pack()
+
+            # Button to see score
+            score_button = tk.Button(self, text="See Score", command=self.page_two)
+            score_button.pack()
+
+        else:
+            ttk.Label(self, text="Invalid category").pack()
+            
+    def fetch_questions(self, table_name):
+        # Execute a query to fetch questions from the specified table
+        query = f"SELECT * FROM {table_name}"
+        self.cursor.execute(query)
+        questions = self.cursor.fetchall()
+        return questions
