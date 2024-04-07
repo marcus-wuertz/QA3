@@ -83,8 +83,10 @@ class Application(tk.Tk):
 
             # Button to see score
             score_button = tk.Button(self, text="See Score", command=self.page_two)
-            score_button.pack()
-
+            score_button.pack(side='right')
+             # Previous page button
+            prev_btn = tk.Button(self, text="Previous Page", command=self.main_page)
+            prev_btn.pack(side='left')
         else:
             ttk.Label(self, text="Invalid category").pack()
 
