@@ -87,10 +87,28 @@ class Application(tk.Tk):
 
         else:
             ttk.Label(self, text="Invalid category").pack()
-            
+
     def fetch_questions(self, table_name):
         # Execute a query to fetch questions from the specified table
         query = f"SELECT * FROM {table_name}"
         self.cursor.execute(query)
         questions = self.cursor.fetchall()
         return questions
+    
+    def check_answer(self, correct_answer, answer_var):
+        # Retrieve the selected answer from the corresponding answer_var
+        selected_answer = answer_var.get()
+ 
+        # Ensure that correct_answer and selected_answer are both strings
+        correct_answer = str(correct_answer)
+
+        print("Correct answer:", correct_answer.strip().lower())  # Debugging message
+        print("Selected answer:", selected_answer.strip().lower())  # Debugging message
+
+        if correct_answer.strip().lower() == selected_answer.strip().lower():  # Case-insensitive comparison
+            # Display 'Correct!' in green
+            self.feedback_label.config(text="Correct!", fg="green")
+            self.score += 1  # Increment score
+        else:
+            # Display 'Incorrect!' in red
+            self.feedback_label.config(text="Incorrect!", fg="red")
