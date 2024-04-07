@@ -112,3 +112,21 @@ class Application(tk.Tk):
         else:
             # Display 'Incorrect!' in red
             self.feedback_label.config(text="Incorrect!", fg="red")
+
+    def page_two(self):
+        self.clear_screen()
+        if self.selected_category:
+            score_label = ttk.Label(self, text=f"Your score on the {self.selected_category} quiz:")
+            score_label.pack()
+
+            score_value_label = ttk.Label(self, text=f"{self.score}/{len(self.answer_vars)}")
+            score_value_label.pack()
+
+            farewell_lbl=ttk.Label(self, text="Thanks, for playing! I'f you'd like another category, press Home")
+            farewell_lbl.pack()
+
+            # Button to go back to the home page
+            home_button = tk.Button(self, text="Home", command=self.main_page)
+            home_button.pack()
+        else:
+            ttk.Label(self, text="No quiz has been taken yet.").pack()
