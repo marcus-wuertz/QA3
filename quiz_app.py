@@ -42,3 +42,15 @@ class Application(tk.Tk):
         # Button to proceed to the quiz based on selected category
         self.b1 = tk.Button(self, text="Start Quiz", command=self.page_one)
         self.b1.pack()
+
+    def page_one(self):
+        self.clear_screen()
+        selected_category = self.category_var.get()
+        lbl1 = ttk.Label(self, text=f'{selected_category} quiz')
+        lbl1.pack()
+
+        # Store selected category for later use
+        self.selected_category = selected_category
+
+        # Get the table name based on the selected category
+        table_name = self.category_table_mapping.get(selected_category)
